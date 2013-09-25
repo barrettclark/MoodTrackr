@@ -10,6 +10,7 @@ class RootController < UITableViewController
     super
     view.dataSource = view.delegate = self
     navigationItem.title = "Pick A Mood"
+    # Mood.destroy_all
   end
 
   # def tableView(tableView, titleForHeaderInSection:section)
@@ -40,7 +41,8 @@ class RootController < UITableViewController
     tableView.deselectRowAtIndexPath(indexPath, animated: true)
 
     @mood_list_controller ||= MoodListController.alloc.init
-    @mood_list_controller.selected_face(face(indexPath.row))
+    mood = Mood.new(emoji: face_emoji(indexPath.row), name: face_name(indexPath.row))
+    mood.save
     self.navigationController.pushViewController(@mood_list_controller, animated:true)
   end
 
@@ -53,6 +55,6 @@ class RootController < UITableViewController
     face(index)[1].hex.chr(Encoding::UTF_8)
   end
   def face_name(index)
-    face(index)[0].capitalize
+    face(index)[0].to_s.capitalize
   end
 end

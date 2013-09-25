@@ -17,7 +17,7 @@ class MoodListController < UITableViewController
   # end
 
   def tableView(tableView, numberOfRowsInSection:section)
-    1
+    Mood.count
   end
 
   def tableView(tableView, cellForRowAtIndexPath: indexPath)
@@ -26,17 +26,11 @@ class MoodListController < UITableViewController
       cell.selectionStyle = UITableViewCellSelectionStyleBlue
       cell
     end
-
-    cell.textLabel.text = "You picked a face"
+    mood = Mood.mood_for_row(indexPath.row)
+    cell.textLabel.text = "#{mood.emoji} #{mood.name} - #{mood.created_at_pretty}"
     cell
   end
 
   def tableView(tableView, didSelectRowAtIndexPath:indexPath)
-  end
-
-  # Helper methods
-
-  def selected_face(face)
-    @face = face
   end
 end
