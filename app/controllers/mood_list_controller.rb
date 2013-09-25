@@ -4,7 +4,14 @@ class MoodListController < UITableViewController
   def viewDidLoad
     super
     view.dataSource = view.delegate = self
-    navigationItem.title = "Your Moods"
+    average_mood = Mood.average
+    if average_mood == :smile
+      navigationItem.title = 'You\'re Happy'
+    elsif average_mood == :neutral
+      navigationItem.title = 'You\'re Eh'
+    else
+      navigationItem.title = 'You\'re Sad'
+    end
   end
 
   # def tableView(tableView, titleForHeaderInSection:section)
